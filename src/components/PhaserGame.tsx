@@ -3,7 +3,7 @@ import { playGame } from "../matchThree/playGame";
 
 
 
-export function PhaserGame() {
+export function PhaserGame({ onScoreUpdate }: { onScoreUpdate: (score: number) => void }) {
   const gameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -12,16 +12,18 @@ export function PhaserGame() {
     let gameConfig = {
     width: 450,
     height: 700,
-    scene: playGame,
+    scene: new playGame(onScoreUpdate),
+    // scene: playGame,
     backgroundColor: 0x222222,
     parent: gameRef.current,
   };
   const game = new Phaser.Game(gameConfig);
+  console.log(game);
 
     return () => {
       game.destroy(true);
     };
   }, []);
 
-  return <div ref={gameRef} />;
+  return <div ref={gameRef}/>;
 }

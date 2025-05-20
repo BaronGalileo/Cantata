@@ -8,6 +8,7 @@ interface SelectedGem {
 }
 
 export class playGame extends Phaser.Scene {
+  private onScoreUpdate: (score: number) => void;
   match3!: Match3;
   frames: string[] = [];
   poolArray: Phaser.GameObjects.Sprite[] = [];
@@ -18,9 +19,14 @@ export class playGame extends Phaser.Scene {
   score: number = 0;
   scoreText!: Phaser.GameObjects.Text;
 
-  constructor() {
+  constructor(onScoreUpdate: (score: number) => void) {
     super("PlayGame");
+    this.onScoreUpdate = onScoreUpdate;
   }
+
+  // constructor() {
+  //   super("PlayGame");
+  // }
 
   preload() {
     this.load.atlas("gems", "/assets/elem.png", "/assets/elem.json");
@@ -182,6 +188,7 @@ export class playGame extends Phaser.Scene {
 
     if (this.scoreText) {
       this.scoreText.setText("Score: " + this.score);
+      this.onScoreUpdate(this.score) //наружу данные о счёте
     }
 
     gemsToRemove.forEach((gem) => {

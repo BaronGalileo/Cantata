@@ -1,6 +1,6 @@
 export const gameOptions = {
   gemSize: 50,
-  swapSpeed: 200,
+  swapSpeed: 100,
   fallSpeed: 100,
   destroySpeed: 200,
   boardOffset: {
